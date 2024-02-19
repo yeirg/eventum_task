@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\ET.BuildingBlocks.Application\ET.BuildingBlocks.Application.csproj" />
+      <ProjectReference Include="..\ET.BuildingBlocks.Security\ET.BuildingBlocks.Security.csproj" />
+      <ProjectReference Include="..\ET.Domain\ET.Domain.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="AutoMapper" Version="13.0.1" />
+      <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
+      <PackageReference Include="Microsoft.IdentityModel.JsonWebTokens" Version="7.4.0-preview1" />
+    </ItemGroup>
+
+</Project>
