@@ -11,22 +11,21 @@ public class CarConfiguration : IEntityTypeConfiguration<Car>
     {
         builder.OwnsOne(c => c.Brand, brand =>
         {
-            brand.Property(b => b.Value).HasColumnName(nameof(BrandName)).IsRequired();
-            brand.HasIndex(b => b.Value).IsUnique();
+            brand.Property(b => b.Value).HasColumnName("brand_name").IsRequired();
         }).Navigation(c => c.Brand).IsRequired();
 
         builder.OwnsOne(c => c.Model, model =>
         {
-            model.Property(m => m.Value).HasColumnName(nameof(ModelName)).IsRequired();
+            model.Property(m => m.Value).HasColumnName("model_name").IsRequired();
             //model.HasIndex(m => m.Value).IsUnique();
-        });
+        }).Navigation(c => c.Model).IsRequired();
 
         builder.HasOne(c => c.Color)
             .WithMany()
-            .HasForeignKey("ColorId")
+            .HasForeignKey("h_color_id")
             .IsRequired();
         
-        builder.Property(c => c.CreatedAt).HasColumnType("timestamp without time zone");
-        builder.Property(c => c.UpdatedAt).HasColumnType("timestamp without time zone");
+        builder.Property(c => c.CreatedAt).HasColumnType("timestamp with time zone");
+        builder.Property(c => c.UpdatedAt).HasColumnType("timestamp with time zone");
     }
 }

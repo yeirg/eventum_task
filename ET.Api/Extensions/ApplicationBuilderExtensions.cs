@@ -1,4 +1,5 @@
 ﻿using ET.Application.Cars;
+using ET.Application.Users;
 using Serilog;
 
 namespace ET.Api.Extensions;
@@ -9,7 +10,7 @@ public static class ApplicationBuilderExtensions
     {
         var scope = appBuilder.ApplicationServices.CreateScope();
         
-        var seedService = scope.ServiceProvider.GetRequiredService<CarSeederService>();
+        var seedService = scope.ServiceProvider.GetRequiredService<UserSeederService>();
         
         await seedService.SeedAsync(CancellationToken.None);
     }

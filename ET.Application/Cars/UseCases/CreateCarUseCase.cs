@@ -29,7 +29,7 @@ public class CreateCarUseCase(ICarColorRepository carColorRepository, ICarReposi
 
 public class CreateCarRequest : ICommand<Guid>
 {
-    public string Brand { get; }
-    public string Model { get; }
-    public Guid Color { get; }
+    public string Brand { get; set; }
+    public string Model { get; set; }
+    public Guid Color { get; set; }
 }

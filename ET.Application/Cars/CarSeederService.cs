@@ -46,5 +46,6 @@ public class CarSeederService
 
         await _carColorRepository.AddAsync(colors.ToArray());
         await _carRepository.AddAsync(cars.ToArray());
+        await _unitOfWork.CommitAsync(cancellationToken);
     }
 }

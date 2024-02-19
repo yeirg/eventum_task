@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Net;
+using ET.BuildingBlocks.Error.Exceptions.Business;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -37,6 +38,14 @@ public class ApplicationErrorHandlerMiddleware
         catch (ValidationException validationException)
         {
             context.Response.StatusCode = (int)HttpStatusCode.UnprocessableEntity;
+        }
+        catch (EntityNotFoundException exception)
+        {
+            context.Response.StatusCode = (int)HttpStatusCode.NotFound;
+        }
+        catch (ArgumentException exception)
+        {
+            context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
         }
         catch (Exception exception)
         {

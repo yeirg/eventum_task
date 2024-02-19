@@ -18,6 +18,7 @@ try
     
     builder.Services.RegisterApplicationLayerServices();
     builder.Services.RegisterInfrastructureLayerServices(builder.Configuration);
+    builder.Services.AddControllers();
 
     var app = builder.Build();
 

@@ -9,7 +9,14 @@ public class Car : AuditableAggregateRoot
     public BrandName Brand { get; private set; }
     public ModelName Model { get; private set; }
     public virtual CarColor Color { get; private set; }
-    public Guid ColorId => Color.Id;
+
+    private Guid _colorId;
+
+    public Guid ColorId
+    {
+        get => _colorId;
+        private set => _colorId = value;
+    }
     
     private Car() {}
 
@@ -37,7 +44,7 @@ public class Car : AuditableAggregateRoot
         {
             Model = model;
         }
-        if (!Color.Equals(color))
+        if (!ColorId.Equals(color.Id))
         {
             Color = color;
         }

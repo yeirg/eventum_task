@@ -3,14 +3,23 @@ using ET.Application.Cars.UseCases;
 using ET.Application.Cars.UseCases.Models;
 using ET.BuildingBlocks.Presentation;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ET.Api.Controllers;
 
+[Authorize]
 public class CarsController(ISender sender) : BaseController
 {
+    /// <summary>
+    /// Create a new car
+    /// </summary>
+    /// <param name="request">Request</param>
+    /// <returns>GUID of created car</returns>
+    /// <response code="201">Returns GUID of created car</response>
+    /// <response code="400">Validation error</response>
     [HttpPost]
-    public async Task<Result> Create(CreateCarRequest request)
+    public async Task<Result> Create([FromBody] CreateCarRequest request)
     {
         var car = await sender.Send(request);
 
@@ -19,9 +28,9 @@ public class CarsController(ISender sender) : BaseController
     
     [HttpGet]
     [ProducesResponseType(typeof(List<CarModel>), (int)HttpStatusCode.OK)]
-    public async Task<Result> GetCars(GetCarsRequest request)
+    public async Task<Result> GetCars(int page, int pageSize)
     {
-        var cars = await sender.Send(request);
+        var cars = await sender.Send(new GetCarsRequest(page, pageSize));
 
         return Success(cars);
     }
@@ -39,7 +48,7 @@ public class CarsController(ISender sender) : BaseController
     [HttpPut("{id}")]
     [ProducesResponseType(typeof(Guid), (int)HttpStatusCode.OK)]
     [ProducesResponseType((int)HttpStatusCode.NotFound)]
-    public async Task<Result> UpdateCar(Guid id, UpdateCarRequest request)
+    public async Task<Result> UpdateCar(Guid id, [FromBody] UpdateCarRequest request)
     {
         var car = await sender.Send(request);
 

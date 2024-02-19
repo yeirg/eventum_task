@@ -1,4 +1,5 @@
 ﻿using ET.BuildingBlocks.Domain;
+using ET.BuildingBlocks.Error.Exceptions.Business;
 
 namespace ET.BuildingBlocks.Application.Validation.Extensions;
 
@@ -15,8 +16,7 @@ public static class BusinessExtensions
     public static TEntity EnsureExists<TEntity>(this TEntity? obj, Guid id) 
         where TEntity : Entity<Guid>
     {
-        // TODO: Implement the EnsureExists method
-        return obj ?? throw new ArgumentException();
+        return obj ?? throw new EntityNotFoundException(nameof(TEntity), id, "Not found", "ENTITY NOT FOUND");
     }
         
     /// <summary>
@@ -30,7 +30,6 @@ public static class BusinessExtensions
     public static async Task<TEntity> EnsureExistsAsync<TEntity>(this Task<TEntity?> task, Guid id) 
         where TEntity : Entity<Guid>
     {
-        // TODO: Implement the EnsureExistsAsync method
-        return await task ?? throw new ArgumentException();
+        return await task ?? throw new EntityNotFoundException(nameof(TEntity), id, "Not found", "ENTITY NOT FOUND");
     }
 }

@@ -19,7 +19,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             .HasColumnName(nameof(PasswordHash))
             .IsRequired()).Navigation(u => u.PasswordHash).IsRequired();
         
-        builder.Property(q => q.CreatedAt).HasColumnType("timestamp without time zone");
-        builder.Property(q => q.UpdatedAt).HasColumnType("timestamp without time zone");
+        builder.Property(q => q.CreatedAt).HasColumnType("timestamp with time zone");
+        builder.Property(q => q.UpdatedAt).HasColumnType("timestamp with time zone");
     }
 }

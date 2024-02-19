@@ -14,6 +14,7 @@ using ET.Domain.Cars.Persistence;
 using ET.Domain.Users.Persistence;
 using ET.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 
 namespace ET.Api.Extensions;
 
@@ -42,7 +43,35 @@ public static class DependencyInjectionExtensions
         services.RegisterBcryptPasswordHasher();
         services.RegisterAppDbContext<AppDb>(ob => ob.UseNpgsql(
             configuration.GetConnectionString(nameof(AppDb))));
-        services.AddSwaggerGen();
+        services.AddSwaggerGen(c =>
+        {
+            c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+            {
+                Description = "JWT",
+                Name = "Authorization",
+                In = ParameterLocation.Header,
+                Type = SecuritySchemeType.ApiKey,
+                Scheme = "Bearer"
+            });
+            c.AddSecurityRequirement(new OpenApiSecurityRequirement()
+            {
+                {
+                    new OpenApiSecurityScheme
+                    {
+                        Reference = new OpenApiReference
+                        {
+                            Type = ReferenceType.SecurityScheme,
+                            Id = "Bearer"
+                        },
+                        Scheme = "oauth2",
+                        Name = "Bearer",
+                        In = ParameterLocation.Header,
+
+                    },
+                    new List<string>()
+                }
+            });
+        });
         services.AddEndpointsApiExplorer();
         services.AddAutoMapper(typeof(CarProfile).Assembly);
         services.RegisterAuditorDbContextInterceptors();

@@ -13,7 +13,7 @@ public class UpdateCarUseCase(ICarRepository carRepository, ICarColorRepository 
 {
     protected override async Task<Guid> HandleAsync(UpdateCarRequest request, CancellationToken cancellationToken)
     {
-        var color = await carColorRepository.GetFirstOrDefaultAsync(new AggregateSpecification<CarColor>().ById(request.Id), cancellationToken)
+        var color = await carColorRepository.GetFirstOrDefaultAsync(new AggregateSpecification<CarColor>().ById(request.Color), cancellationToken)
             .EnsureExistsAsync(request.Color);
         var car = await carRepository.GetFirstOrDefaultAsync(new AggregateSpecification<Car>().ById(request.Id), cancellationToken)
             .EnsureExistsAsync(request.Id);
@@ -28,8 +28,8 @@ public class UpdateCarUseCase(ICarRepository carRepository, ICarColorRepository 
 
 public class UpdateCarRequest : ICommand<Guid>
 {
-    public Guid Id { get; } = Guid.Empty;
-    public string Brand { get; } = string.Empty;
-    public string Model { get; } = string.Empty;
-    public Guid Color { get; } = Guid.Empty;
+    public Guid Id { get; set; }
+    public string Brand { get; set; } = string.Empty;
+    public string Model { get; set; } = string.Empty;
+    public Guid Color { get; set; }
 }

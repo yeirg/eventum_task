@@ -10,8 +10,11 @@ public class CarColorConfiguration : IEntityTypeConfiguration<CarColor>
     {
         builder.OwnsOne(c => c.Color, color =>
         {
-            color.Property(b => b.Value).HasColumnName(nameof(Color)).IsRequired();
+            color.Property(b => b.Value).HasColumnName("name").IsRequired();
             color.HasIndex(b => b.Value).IsUnique();
         });
+
+        builder.HasMany(c => c.Cars)
+            .WithOne(c => c.Color);
     }
 }

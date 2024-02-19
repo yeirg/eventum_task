@@ -12,11 +12,10 @@ public class GetCarByIdUseCase(ICarRepository _repository, IMapper _mapper) : Us
     protected override async Task<CarModel> HandleAsync(GetCarByIdRequest request, CancellationToken cancellationToken)
     {
         var spec = new CarSpecification();
-        spec.ById(request.Id);
+        spec.IncludeColor().ById(request.Id);
         
         var car = await _repository.GetFirstOrDefaultAsync(spec, cancellationToken);
         car.EnsureExists(request.Id);
-        
         
         return _mapper.Map<CarModel>(car);
     }

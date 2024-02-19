@@ -2,6 +2,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
+using LoginRequest = ET.Application.Users.Auth.UseCases.LoginRequest;
 
 namespace ET.Api.Controllers;
 

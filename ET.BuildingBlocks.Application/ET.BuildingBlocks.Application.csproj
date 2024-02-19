@@ -15,6 +15,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\ET.BuildingBlocks.Domain\ET.BuildingBlocks.Domain.csproj" />
+      <ProjectReference Include="..\ET.BuildingBlocks.Error\ET.BuildingBlocks.Error.csproj" />
     </ItemGroup>
 
     <ItemGroup>

@@ -15,4 +15,10 @@ public class CarSpecification : AggregateSpecification<Car>
         Query.Skip(pageSize * (page - 1)).Take(pageSize);
         return this;
     }
+
+    public CarSpecification IncludeColor()
+    {
+        Query.Include(c => c.Color);
+        return this;
+    }
 }

@@ -6,7 +6,7 @@ namespace ET.Domain.Users;
 /// <summary>
 /// Сущность, представляющая пользователя в системе.
 /// </summary>
-public class User : AuditableAggregateRoot
+public sealed class User : AuditableAggregateRoot
 {
     private User()
     {
@@ -26,26 +26,11 @@ public class User : AuditableAggregateRoot
 
     public Login Login { get; private set; }
     public PasswordHash PasswordHash { get; private set; }
-    public bool IsDeleted { get; private set; }
-    public bool IsBlocked { get; private set; }
     public DateTime? LastLoginDate { get; private set; }
-    public DateTime? BlockedDate { get; private set; }
-    public DateTime? DeletedDate { get; private set; }
 
     public void LogIn()
     {
         AddEvent(new UserLoggedInDomainEvent(Login));
         LastLoginDate = DateTime.UtcNow;
-    }
-
-    public void Block()
-    {
-        if (IsBlocked)
-        {
-            return;
-        }
-
-        IsBlocked = true;
-        BlockedDate = DateTime.UtcNow;
     }
 }
